@@ -1,3 +1,4 @@
+(() => {
 const primary = '2348166377843';
 
 const activateWhatsApp = () => {
@@ -70,3 +71,4 @@ if (menu) menu.addEventListener('click', () => {
   menu.setAttribute('aria-expanded', open);
   menu.textContent = open ? 'Close' : 'Menu';
 });
+})();
