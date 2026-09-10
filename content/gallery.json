@@ -1,6 +1,31 @@
 {
   "items": [
     {
+      "image": "lounge-set-front.jpeg",
+      "title": "Taupe lounge set",
+      "label": "Showroom edit · Living",
+      "collection": "showroom",
+      "category": "living",
+      "featured": true,
+      "newArrival": true
+    },
+    {
+      "image": "lounge-set-full.jpeg",
+      "title": "Taupe lounge set — full view",
+      "label": "Showroom edit · Living",
+      "collection": "showroom",
+      "category": "living",
+      "newArrival": true
+    },
+    {
+      "image": "lounge-set-angle.jpeg",
+      "title": "Taupe lounge set — angled view",
+      "label": "Showroom edit · Living",
+      "collection": "showroom",
+      "category": "living",
+      "newArrival": true
+    },
+    {
       "image": "project-media-wall-01.jpeg",
       "title": "Media wall installation",
       "label": "Completed space · Living",
