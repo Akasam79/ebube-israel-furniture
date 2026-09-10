@@ -24,9 +24,17 @@ const cardMarkup = (item, index) => {
 
 const renderGallery = (galleryItems) => {
   if (!Array.isArray(galleryItems)) return;
+  const newArrivalsSection = document.querySelector('#new-arrivals');
+  const newArrivalsGrid = document.querySelector('#new-arrivals-grid');
   const fullCatalogue = document.querySelector('#full-catalogue');
   const signatureGrid = document.querySelector('#signature-grid');
   const workshopGrid = document.querySelector('#workshop-grid');
+
+  if (newArrivalsSection && newArrivalsGrid) {
+    const newArrivals = galleryItems.filter((item) => item.newArrival).slice(0, 5);
+    newArrivalsSection.hidden = newArrivals.length === 0;
+    newArrivalsGrid.innerHTML = newArrivals.map((item) => `<article><img src="${escapeHtml(imagePath(item.image))}" alt="${escapeHtml(item.title)} by Ebube Israel Furniture Enterprise"><p>${escapeHtml(item.label)}</p><h3>${escapeHtml(item.title)}</h3><a data-wa="${escapeHtml(`Hello Ebube Israel Furniture, I like the new ${item.title} and would like an enquiry.`)}" href="#">Ask about this design →</a></article>`).join('');
+  }
 
   if (fullCatalogue) fullCatalogue.innerHTML = galleryItems.map(cardMarkup).join('');
 
@@ -71,6 +79,8 @@ const renderGallery = (galleryItems) => {
   const requestedCollection = new URLSearchParams(window.location.search).get('collection');
   const requestedFilter = requestedCollection && document.querySelector(`.collection-filter[data-collection-filter="${requestedCollection}"]`);
   if (requestedFilter) requestedFilter.click();
+
+  activateWhatsApp();
 };
 
 const loadGallery = async () => {

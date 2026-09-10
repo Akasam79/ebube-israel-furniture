@@ -26,3 +26,4 @@ collections:
               - { name: "collection", label: "Collections", widget: "string", hint: "Use these exact words, separated by spaces if needed: completed, showroom, signature, workshop, inspiration." }
               - { name: "category", label: "Room or piece", widget: "string", hint: "Use these exact words, separated by spaces if needed: living, dining, kitchen, bedroom, builtins." }
               - { name: "featured", label: "Make this card larger when possible", widget: "boolean", default: false, required: false }
+              - { name: "newArrival", label: "Show in New Arrivals on the home page", widget: "boolean", default: false, required: false, hint: "This image will still appear in its normal gallery collection and room filters." }

@@ -8,6 +8,7 @@ A lightweight, static website for Ebube Israel Furniture Enterprise. It is conne
 2. Sign in with the GitHub account that has access to this repository.
 3. Open **Gallery catalogue → Gallery images**.
 4. Add a catalogue item, upload the photograph, choose its collection and room type, then publish.
+5. For a newly added piece that should appear near the top of the home page, enable **Show in New Arrivals on the home page**. It will also remain in the normal gallery and all applicable filters.
 
 Netlify will automatically publish the change. The original gallery entries are already available in the dashboard, so their titles, labels and filters can be edited there too.
 
