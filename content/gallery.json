@@ -488,10 +488,19 @@
       "featured": false,
       "newArrival": true,
       "image": "/assets/images/whatsapp-image-2026-09-10-at-11.06.29-4-.jpeg",
-      "label": "Showroom edit",
+      "label": "Showroom edit · Living",
+      "collection": "showroom",
+      "category": "living",
+      "title": "Contemporary lounge set"
+    },
+    {
+      "featured": false,
+      "newArrival": true,
+      "image": "/assets/images/whatsapp-image-2026-09-10-at-11.06.27-1-.jpeg",
+      "title": "Contemporary lounge set",
+      "label": "Living",
       "collection": "completed",
-      "category": "living builtins",
-      "title": "New concept design. Freshly baked!"
+      "category": "living builtins"
     }
   ]
 }
