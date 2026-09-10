@@ -32,8 +32,9 @@ const renderGallery = (galleryItems) => {
 
   if (newArrivalsSection && newArrivalsGrid) {
     const newArrivals = galleryItems.filter((item) => item.newArrival).slice(0, 5);
-    newArrivalsSection.hidden = newArrivals.length === 0;
-    newArrivalsGrid.innerHTML = newArrivals.map((item) => `<article><img src="${escapeHtml(imagePath(item.image))}" alt="${escapeHtml(item.title)} by Ebube Israel Furniture Enterprise"><p>${escapeHtml(item.label)}</p><h3>${escapeHtml(item.title)}</h3><a data-wa="${escapeHtml(`Hello Ebube Israel Furniture, I like the new ${item.title} and would like an enquiry.`)}" href="#">Ask about this design →</a></article>`).join('');
+    newArrivalsGrid.innerHTML = newArrivals.length
+      ? newArrivals.map((item) => `<article><img src="${escapeHtml(imagePath(item.image))}" alt="${escapeHtml(item.title)} by Ebube Israel Furniture Enterprise"><p>${escapeHtml(item.label)}</p><h3>${escapeHtml(item.title)}</h3><a data-wa="${escapeHtml(`Hello Ebube Israel Furniture, I like the new ${item.title} and would like an enquiry.`)}" href="#">Ask about this design →</a></article>`).join('')
+      : '<p class="new-arrivals-empty">Fresh work is being added. Check back soon, or explore the full catalogue below.</p>';
   }
 
   if (fullCatalogue) fullCatalogue.innerHTML = galleryItems.map(cardMarkup).join('');
