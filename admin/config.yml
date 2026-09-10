@@ -1,0 +1,28 @@
+backend:
+  name: github
+  repo: Akasam79/ebube-israel-furniture
+  branch: main
+
+media_folder: "assets/images"
+public_folder: "/assets/images"
+
+collections:
+  - name: "gallery"
+    label: "Gallery catalogue"
+    files:
+      - name: "gallery_items"
+        label: "Gallery images"
+        file: "content/gallery.json"
+        format: "json"
+        fields:
+          - name: "items"
+            label: "Catalogue items"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.label}}"
+            fields:
+              - { name: "image", label: "Image", widget: "image" }
+              - { name: "title", label: "Title", widget: "string" }
+              - { name: "label", label: "Display label", widget: "string", hint: "For example: Showroom edit · Living" }
+              - { name: "collection", label: "Collections", widget: "string", hint: "Use these exact words, separated by spaces if needed: completed, showroom, signature, workshop, inspiration." }
+              - { name: "category", label: "Room or piece", widget: "string", hint: "Use these exact words, separated by spaces if needed: living, dining, kitchen, bedroom, builtins." }
+              - { name: "featured", label: "Make this card larger when possible", widget: "boolean", default: false, required: false }

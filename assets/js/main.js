@@ -9,23 +9,35 @@ const activateWhatsApp = () => {
   });
 };
 
-const cardMarkup = (item, index) => `<article class="catalogue-card ${item.featured && index % 5 === 0 ? 'span-two' : ''}" data-collection="${item.collection}" data-category="${item.category}"><img src="assets/images/${item.image}" alt="${item.title} by Ebube Israel Furniture Enterprise"><div><p>${item.label}</p><h3>${item.title}</h3><a data-wa="Hello Ebube Israel Furniture, I like the ${item.title} in your gallery and would like an enquiry." href="#">Ask about this ${item.collection.includes('inspiration') ? 'style' : 'design'} →</a></div></article>`;
+const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' }[character]));
+const tokenList = (value) => (Array.isArray(value) ? value : String(value ?? '').split(' ')).filter(Boolean);
+const tokenValue = (value) => tokenList(value).join(' ');
+const hasToken = (value, token) => tokenList(value).includes(token);
+const imagePath = (image) => String(image ?? '').startsWith('/') ? image : `assets/images/${image}`;
+const cardMarkup = (item, index) => {
+  const title = escapeHtml(item.title);
+  const collection = tokenValue(item.collection);
+  const category = tokenValue(item.category);
+  const enquiry = escapeHtml(`Hello Ebube Israel Furniture, I like the ${item.title} in your gallery and would like an enquiry.`);
+  return `<article class="catalogue-card ${item.featured && index % 5 === 0 ? 'span-two' : ''}" data-collection="${escapeHtml(collection)}" data-category="${escapeHtml(category)}"><img src="${escapeHtml(imagePath(item.image))}" alt="${title} by Ebube Israel Furniture Enterprise"><div><p>${escapeHtml(item.label)}</p><h3>${title}</h3><a data-wa="${enquiry}" href="#">Ask about this ${hasToken(item.collection, 'inspiration') ? 'style' : 'design'} →</a></div></article>`;
+};
 
-if (Array.isArray(window.galleryItems)) {
+const renderGallery = (galleryItems) => {
+  if (!Array.isArray(galleryItems)) return;
   const fullCatalogue = document.querySelector('#full-catalogue');
   const signatureGrid = document.querySelector('#signature-grid');
   const workshopGrid = document.querySelector('#workshop-grid');
 
-  if (fullCatalogue) fullCatalogue.innerHTML = window.galleryItems.map(cardMarkup).join('');
+  if (fullCatalogue) fullCatalogue.innerHTML = galleryItems.map(cardMarkup).join('');
 
   if (signatureGrid) {
-    const signatureItems = window.galleryItems.filter((item) => item.collection.includes('signature')).slice(0, 5);
-    signatureGrid.innerHTML = signatureItems.map((item) => `<figure><img src="assets/images/${item.image}" alt="${item.title} by Ebube Israel Furniture Enterprise"><figcaption>${item.title}</figcaption></figure>`).join('');
+    const signatureItems = galleryItems.filter((item) => hasToken(item.collection, 'signature')).slice(0, 5);
+    signatureGrid.innerHTML = signatureItems.map((item) => `<figure><img src="${escapeHtml(imagePath(item.image))}" alt="${escapeHtml(item.title)} by Ebube Israel Furniture Enterprise"><figcaption>${escapeHtml(item.title)}</figcaption></figure>`).join('');
   }
 
   if (workshopGrid) {
-    const workshopItems = window.galleryItems.filter((item) => item.collection.includes('workshop')).slice(0, 5);
-    workshopGrid.innerHTML = workshopItems.map((item, index) => `<figure class="${index === 0 ? 'workshop-feature' : ''}"><img src="assets/images/${item.image}" alt="${item.title} in the Ebube Israel Furniture workshop"><figcaption>${index === 0 ? '<span>Work in progress</span><strong>' + item.title + '</strong>' : item.title}</figcaption></figure>`).join('');
+    const workshopItems = galleryItems.filter((item) => hasToken(item.collection, 'workshop')).slice(0, 5);
+    workshopGrid.innerHTML = workshopItems.map((item, index) => `<figure class="${index === 0 ? 'workshop-feature' : ''}"><img src="${escapeHtml(imagePath(item.image))}" alt="${escapeHtml(item.title)} in the Ebube Israel Furniture workshop"><figcaption>${index === 0 ? '<span>Work in progress</span><strong>' + escapeHtml(item.title) + '</strong>' : escapeHtml(item.title)}</figcaption></figure>`).join('');
   }
 
   let activeCollection = 'all';
@@ -59,7 +71,23 @@ if (Array.isArray(window.galleryItems)) {
   const requestedCollection = new URLSearchParams(window.location.search).get('collection');
   const requestedFilter = requestedCollection && document.querySelector(`.collection-filter[data-collection-filter="${requestedCollection}"]`);
   if (requestedFilter) requestedFilter.click();
-}
+};
+
+const loadGallery = async () => {
+  let galleryItems = Array.isArray(window.galleryItems) ? window.galleryItems : [];
+  try {
+    const response = await fetch('content/gallery.json', { cache: 'no-store' });
+    if (response.ok) {
+      const gallery = await response.json();
+      if (Array.isArray(gallery.items)) galleryItems = gallery.items;
+    }
+  } catch {
+    // The checked-in gallery script is a safe local/offline fallback.
+  }
+  renderGallery(galleryItems);
+};
+
+loadGallery();
 
 activateWhatsApp();
 document.querySelectorAll('[data-year]').forEach((el) => el.textContent = new Date().getFullYear());

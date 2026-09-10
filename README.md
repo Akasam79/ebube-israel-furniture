@@ -1,6 +1,15 @@
 # Ebube Israel Furniture Enterprise
 
-A lightweight, static website. No build step or hosting subscription is required.
+A lightweight, static website for Ebube Israel Furniture Enterprise. It is connected to GitHub and Netlify for continuous publishing.
+
+## Add gallery images without code
+
+1. Go to `https://ebubeisraelfurnitureenterprise.com/admin/`.
+2. Sign in with the GitHub account that has access to this repository.
+3. Open **Gallery catalogue → Gallery images**.
+4. Add a catalogue item, upload the photograph, choose its collection and room type, then publish.
+
+Netlify will automatically publish the change. The original gallery entries are already available in the dashboard, so their titles, labels and filters can be edited there too.
 
 ## Publish on Netlify
 
@@ -15,8 +24,6 @@ A lightweight, static website. No build step or hosting subscription is required
 3. Under **Build and deployment**, select **Deploy from a branch**, then choose `main` and `/ (root)`.
 4. Save. GitHub will provide the public address within a few minutes.
 
-## Before publishing
+## Business profile
 
-- Replace “Full office address coming soon” in `contact.html` with the verified office address.
-- Add the actual logo file as `assets/images/logo.png`, then replace the text-based `EI` mark in each page header and footer if preferred.
-- After you have a public URL, add it to the Google Business Profile (see `GOOGLE-BUSINESS-PROFILE.md`).
+The website address is ready to add to the Google Business Profile. See `GOOGLE-BUSINESS-PROFILE.md` for the profile copy and setup checklist.
